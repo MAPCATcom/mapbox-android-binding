@@ -135,8 +135,10 @@
   <ItemGroup>
     <None Include="Additions\AboutAdditions.txt" />
     <None Include="Jars\AboutJars.txt" />
-    <LibraryProjectZip Include="Jars\mapcat-android-sdk-1.0.2.aar" />
-    <None Include="packages.config" />
+    <LibraryProjectZip Include="Jars\mapcat-android-sdk-1.0.4.aar" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <TransformFile Include="Transforms\EnumFields.xml" />

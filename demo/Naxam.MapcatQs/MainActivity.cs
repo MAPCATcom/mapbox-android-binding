@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Widget;
+using Android.Util;
 using Android.OS;
 using MapcatAccountManager = Com.Mapcat.Mapcatsdk.Mapcat;
 using Com.Mapcat.Mapcatsdk.Maps;
@@ -17,21 +18,23 @@ namespace Naxam.MapcatQs
 
 		protected override void OnCreate(Bundle bundle)
 		{
-			//TabLayoutResource = Resource.Layout.Tabbar;
-			//ToolbarResource = Resource.Layout.Toolbar;
+            //TabLayoutResource = Resource.Layout.Tabbar;
+            //ToolbarResource = Resource.Layout.Toolbar;
+
+            Log.Info("General", "startup");
 
 			base.OnCreate(bundle);
-			MapcatAccountManager.GetInstance(this, Resources.GetString(Resource.String.access_token));
-            MapcatAccountManager.AccessToken = "jM9oGlsfWxOOYYF0kvuq2UbYl3XrVuUzJmwfnB6M";
-
+			MapcatAccountManager.GetInstance(this.BaseContext, "< Your Mapcat Visualization API key goes here >");
 
             SetContentView(Resource.Layout.Main);
 
 			mapView = FindViewById<MapView>(Resource.Id.mapView);
 			//mapView.StyleUrl = Style.MapboxStreets;
-			mapView.OnCreate(bundle);
+			
 
             mapView.InitMapcatMap(new LayerOptions(false, false));
+
+            mapView.OnCreate(bundle);
 
             //global::Xamarin.Forms.Forms.Init(this, bundle);
 
