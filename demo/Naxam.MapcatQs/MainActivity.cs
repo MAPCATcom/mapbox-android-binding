@@ -46,7 +46,7 @@ namespace Naxam.MapcatQs
                    MarkerOptions marker = new MarkerOptions();
                    marker.SetPosition(new LatLng(47.033, 18.025));
                    marker.SetTitle("Hello!");
-                   marker.SetSnippet("Wellcome");
+                   marker.SetSnippet("Welcome");
                    map.AddMarker(marker);
                }
            ));
