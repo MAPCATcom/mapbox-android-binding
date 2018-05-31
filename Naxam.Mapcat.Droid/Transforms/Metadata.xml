@@ -7,7 +7,7 @@
 		path="/api/package[@name='com.mapcat.mapcatsdk.style.functions.stops']/class[@name='IdentityStops']/method[@name='getTypeName']"
 		name="visibility">public</attr>
 	<attr
-		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapcatMap']/method[@name='queryRenderedFeatures']"
+		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapboxMap']/method[@name='queryRenderedFeatures']"
 		name="managedReturn">System.Collections.Generic.IList&lt;Com.Mapbox.Services.Commons.Geojson.Feature&gt;</attr>
 	<attr
 		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='Transform']"
@@ -15,12 +15,12 @@
 	<attr
 		path="/api/package[@name='com.mapcat.mapcatsdk.annotations']/class[@name='MarkerViewManager.ImageMarkerViewAdapter']/method[@name='getView']/parameter[@name='p0']"
 		name="type">Java.Lang.Object</attr>
-  <remove-node
-    path="api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapboxMap']" />
+  <!--remove-node
+    path="api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapboxMap']" /-->
   <!--remove-node
     path="api/package[@name='com.mapcat.mapcatsdk.offline']/class[@name='OfflineRegion']" /-->
-  <!--remove-node
-		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/interface[@name='MapboxMap.OnRegisterTouchListener']" /-->
+  <remove-node
+		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/interface[@name='MapboxMap.OnRegisterTouchListener']" />
 	<!--<remove-node
 		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/interface[@name='MapView.RegisterTouchListener']" />-->
 	<remove-node
@@ -165,8 +165,8 @@
 		path="/api/package[@name='com.mapcat.mapcatsdk.annotations']/class[@name='Annotation']/field[@name='mapView']"
 		name="managedName">_mapView</attr>
 	<attr
-		path="/api/package[@name='com.mapcat.mapcatsdk.annotations']/class[@name='Annotation']/field[@name='mapcatMap']"
-		name="managedName">_mapcatMap</attr>
+		path="/api/package[@name='com.mapcat.mapcatsdk.annotations']/class[@name='Annotation']/field[@name='mapboxMap']"
+		name="managedName">_mapboxMap</attr>
 	<attr
 		path="/api/package[@name='com.mapcat.mapcatsdk.annotations']/class[@name='InfoWindow']/field[@name='view']"
 		name="managedName">_view</attr>
@@ -183,13 +183,13 @@
 		path="/api/package[@name='com.mapcat.mapcatsdk.annotations']/class[@name='MarkerOptions']/method[@name='getThis' and count(parameter)=0]"
 		name="managedName">ThisMarkerOptions</attr>
 	<remove-node
-		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapcatMap']/method[@name='setOnCameraIdleListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapcatMap.OnCameraIdleListener']]" />
+		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapboxMap']/method[@name='setOnCameraIdleListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapboxMap.OnCameraIdleListener']]" />
 	<remove-node
-		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapcatMap']/method[@name='setOnCameraMoveCancelListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapcatMap.OnCameraMoveCanceledListener']]" />
+		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapboxMap']/method[@name='setOnCameraMoveCancelListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapboxMap.OnCameraMoveCanceledListener']]" />
 	<remove-node
-		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapcatMap']/method[@name='setOnCameraMoveListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapcatMap.OnCameraMoveListener']]" />
+		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapboxMap']/method[@name='setOnCameraMoveListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapboxMap.OnCameraMoveListener']]" />
 	<remove-node
-		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapcatMap']/method[@name='setOnCameraMoveStartedListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapcatMap.OnCameraMoveStartedListener']]" />
+		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapboxMap']/method[@name='setOnCameraMoveStartedListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapboxMap.OnCameraMoveStartedListener']]" />
 	<add-node
 		path="/api/package[@name='com.mapcat.mapcatsdk']">
 		<class
@@ -204,15 +204,15 @@
 		</class>
 	</add-node>
 	<attr
-		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapcatMap']/method[@name='setOnFlingListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapcatMap.OnFlingListener']]"
+		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapboxMap']/method[@name='setOnFlingListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapboxMap.OnFlingListener']]"
 		name="eventName">Fling2</attr>
 	<attr
-		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapcatMap']/method[@name='setOnMapClickListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapcatMap.OnMapClickListener']]"
+		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapboxMap']/method[@name='setOnMapClickListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapboxMap.OnMapClickListener']]"
 		name="eventName">MapClick2</attr>
 	<attr
-		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapcatMap']/method[@name='setOnMapLongClickListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapcatMap.OnMapLongClickListener']]"
+		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapboxMap']/method[@name='setOnMapLongClickListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapboxMap.OnMapLongClickListener']]"
 		name="eventName">MapLongClick2</attr>
 	<attr
-		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapcatMap']/method[@name='setOnScrollListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapcatMap.OnScrollListener']]"
+		path="/api/package[@name='com.mapcat.mapcatsdk.maps']/class[@name='MapboxMap']/method[@name='setOnScrollListener' and count(parameter)=1 and parameter[1][@type='com.mapcat.mapcatsdk.maps.MapboxMap.OnScrollListener']]"
 		name="eventName">Scroll2</attr>
 </metadata>

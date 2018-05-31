@@ -3,104 +3,123 @@ using Android.Widget;
 using Android.Util;
 using Android.OS;
 using MapcatAccountManager = Com.Mapcat.Mapcatsdk.Mapcat;
-using Com.Mapcat.Mapcatsdk.Maps;
-using Android.Support.V7.App;
+using Com.Mapcat.Mapcatsdk.Annotations;
 using Com.Mapcat.Mapcatsdk.Camera;
 using Com.Mapcat.Mapcatsdk.Geometry;
-using Com.Mapcat.Mapcatsdk.Annotations;
+using Com.Mapcat.Mapcatsdk.Maps;
+using Android.Support.V7.App;
+using System;
 
 namespace Naxam.MapcatQs
 {
-	[Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@mipmap/ic_launcher", Theme="@style/MyTheme")]
-	public class MainActivity : AppCompatActivity
-	{
-		MapView mapView;
+    class OnMapReadyCallback : Java.Lang.Object, IOnMapReadyCallback
+    {
+        public Action<MapboxMap> MapReady { get; set; }
+        public OnMapReadyCallback(Action<MapboxMap> MapReady)
+        {
+            this.MapReady = MapReady;
+        }
+        public void OnMapReady(MapboxMap map)
+        {
+            MapReady?.Invoke(map);
+        }
+    }
 
-		protected override void OnCreate(Bundle bundle)
-		{
+    [Activity(Label = "@string/app_name", MainLauncher = true, Icon = "@mipmap/ic_launcher", Theme = "@style/MyTheme")]
+    public class MainActivity : AppCompatActivity, IMapViewInitListener
+    {
+        MapView mapView;
+
+        public void OnMapViewInitSuccess()
+        {
+            mapView.GetMapAsync(new OnMapReadyCallback(
+               (map) =>
+               {
+                   // set camera position
+                   var position = new CameraPosition.Builder()
+                           .Target(new LatLng(47.033, 18.025)) // Sets the new camera position
+                           .Zoom(13) // Sets the zoom
+                           .Build(); // Creates a CameraPosition from the builder
+                   map.AnimateCamera(CameraUpdateFactory.NewCameraPosition(position));
+
+                   // add marker
+                   MarkerOptions marker = new MarkerOptions();
+                   marker.SetPosition(new LatLng(47.033, 18.025));
+                   marker.SetTitle("Hello!");
+                   marker.SetSnippet("Welcome");
+                   map.AddMarker(marker);
+               }
+           ));
+        }
+
+        public void OnMapViewInitError(string errorMessage)
+        {
+            Log.Error("MapViewInit", errorMessage);
+        }
+
+        protected override void OnCreate(Bundle bundle)
+        {
             //TabLayoutResource = Resource.Layout.Tabbar;
             //ToolbarResource = Resource.Layout.Toolbar;
 
             Log.Info("General", "startup");
 
-			base.OnCreate(bundle);
-			MapcatAccountManager.GetInstance(this.BaseContext, "< Your Mapcat Visualization API key goes here >");
+            base.OnCreate(bundle);
+            MapcatAccountManager.GetInstance(this.BaseContext, "< Your Mapcat Visualization API key goes here >");
 
             SetContentView(Resource.Layout.Main);
 
-			mapView = FindViewById<MapView>(Resource.Id.mapView);
-			//mapView.StyleUrl = Style.MapboxStreets;
-			
+            mapView = FindViewById<MapView>(Resource.Id.mapView);
 
             mapView.InitMapcatMap(new LayerOptions(false, false));
 
             mapView.OnCreate(bundle);
 
-            //global::Xamarin.Forms.Forms.Init(this, bundle);
+            MapViewInitHandler.RegisterListener(this);
+        }
 
-            //LoadApplication(new App());
+        protected override void OnStart()
+        {
+            base.OnStart();
+            mapView.OnStart();
+        }
 
-            MarkerOptions options = new MarkerOptions()
-                .SetTitle("Hello")
-				.This<MarkerOptions>();
-            
-			/*MarkerViewOptions viewOptions = new MarkerViewOptions()
-                .InvokeTitle("Hello")
-				.This<MarkerViewOptions>();*/
-		}
+        protected override void OnResume()
+        {
+            base.OnResume();
+            mapView.OnResume();
+        }
 
-		protected override void OnStart()
-		{
-			base.OnStart();
-			mapView.OnStart();
-		}
+        protected override void OnPause()
+        {
+            mapView.OnPause();
+            base.OnPause();
+        }
 
-		/*public void OnMapReady(MapboxMap map)
-		{
-			var position = new CameraPosition.Builder()
-						   .Target(new LatLng(41.885, -87.679)) // Sets the new camera position
-						   .Zoom(11) // Sets the zoom
-						   .Build(); // Creates a CameraPosition from the builder
+        protected override void OnSaveInstanceState(Bundle outState)
+        {
+            base.OnSaveInstanceState(outState);
+            mapView.OnSaveInstanceState(outState);
+        }
 
-			map.AnimateCamera(CameraUpdateFactory.NewCameraPosition(position));
+        protected override void OnStop()
+        {
+            base.OnStop();
+            mapView.OnStop();
+        }
 
-		}*/
+        protected override void OnDestroy()
+        {
+            mapView.OnDestroy();
+            base.OnDestroy();
+            MapViewInitHandler.UnregisterListener(this);
+        }
 
-		protected override void OnResume()
-		{
-			base.OnResume();
-			mapView.OnResume();
-		}
-
-		protected override void OnPause()
-		{
-			mapView.OnPause();
-			base.OnPause();
-		}
-
-		protected override void OnSaveInstanceState(Bundle outState)
-		{
-			base.OnSaveInstanceState(outState);
-			mapView.OnSaveInstanceState(outState);
-		}
-
-		protected override void OnStop()
-		{
-			base.OnStop();
-			mapView.OnStop();
-		}
-
-		protected override void OnDestroy()
-		{
-			mapView.OnDestroy();
-			base.OnDestroy();
-		}
-
-		public override void OnLowMemory()
-		{
-			base.OnLowMemory();
-			mapView.OnLowMemory();
-		}
-	} 
+        public override void OnLowMemory()
+        {
+            base.OnLowMemory();
+            mapView.OnLowMemory();
+        }
+    }
 }
 
